@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO List - Alpine.js + TailwindCSS + Vite</title>
+    <script type="module" src="./src/main.js"></script>
+    <script src="//cdn.tailwindcss.com"></script>
+</head>
+<body
+    class="dark:bg-gray-900 font-thin"
+    x-data="todoData"
+>
+    <div class="flex">
+        <div class="w-full m-0 p-0 grid grid-cols-7 gap-3">
+            <div class="col-span-7 pt-4 mb-5">
+                <h1
+                    :class="[
+                        'text-gray-700 dark:text-gray-100',
+                        'text-center uppercase text-3xl font-bold',
+                    ]"
+                >
+                    TODO List
+                </h1>
+            </div>
+
+            <div class="col-span-7 mb-3 p-2">
+                <div class="max-w-lg mx-auto">
+                    <div class="flex">
+                        <label for="status" class="sr-only">Choose a state</label>
+                        <select
+                            id="status"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none outline-none text-sm rounded-s-lg border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected value="">All</option>
+                            <option value="done">Done</option>
+                            <option value="undone">Undone</option>
+                        </select>
+
+                        <div class="relative w-7/12">
+                            <input
+                                type="search"
+                                id="search-dropdown"
+                                class="block p-2.5 w-full z-20 text-sm text-gray-900 focus:outline-none bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search..."
+                                required
+                            />
+                            <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:outline-none outline-none focus:ring-0 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
+                        </div>
+
+                        <div class="w-1/12 px-2">
+                            <button
+                                type="submit"
+                                class="block focus:outline-none outline-none top-0 end-0 px-3 py-2 text-sm font-medium h-full text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-0 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            >
+                                <svg id="theme-toggle-dark-icon" class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                    <path d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z"></path>
+                                  </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-7 mb-3 p-2">
+                <div
+                    class="max-w-lg mx-auto hidden"
+                >
+                    <h5
+                        class="font-medium text-center text-gray-600 dark:text-gray-50"
+                    >Empty</h5>
+                </div>
+
+                <div
+                    class="max-w-lg mx-auto divide-y divide-dashed ___divide-solid"
+                >
+                    <template
+                        x-for="(dataItem, dataItemIndex) in 5"
+                        :key="dataItemIndex"
+                    >
+                        <div
+                            class="flex items-center ps-4"
+                        >
+                            <input
+                                :id="`todo-checkbox-input-${dataItemIndex}`"
+                                type="checkbox"
+                                :checked="(dataItemIndex %2 === 0)"
+                                name="bordered-checkbox"
+                                class="h-5 w-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+                            focus:outline-none outline-none
+                            dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600">
+                            <div
+                                class="w-full select-none py-1 ml-2 text-sm inline-block align-middle"
+                            >
+                                <div
+                                    class="grid grid-cols-8 gap-x-2 py-3 group"
+                                >
+                                    <div
+                                        class="col-span-6"
+                                        :class="{
+                                            'font-medium text-gray-900 dark:text-gray-300': (dataItemIndex %2 !== 0),
+                                            'text-gray-800 dark:text-gray-50': (dataItemIndex %2 === 0),
+                                            'font-thin line-through italic': (dataItemIndex %2 === 0)
+                                        }"
+                                    >
+                                        <span>Default radio</span>
+                                    </div>
+                                    <div
+                                        class="col-span-auto flex items-center hidden group-hover:flex"
+                                    >
+                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="fixed end-6 bottom-6 group"
+        >
+            <button
+                type="button"
+                aria-controls="speed-dial-menu-bottom-right"
+                aria-expanded="false"
+                class="flex items-center justify-center text-white bg-blue-700 rounded-full w-10 h-10 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-0 focus:ring-blue-300 outline-none focus:outline-none dark:focus:ring-blue-800"
+            >
+                <svg
+                    class="w-5 h-5 transition-transform"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 18 18"
+                >
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"></path>
+                </svg>
+                <span class="sr-only">Open actions menu</span>
+            </button>
+        </div>
+    </div>
+
+    <div
+        tabindex="-1"
+        class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%)] max-h-full flex bg-[#000000ad] dark:bg-[#000000ad]"
+        aria-modal="true"
+        role="dialog"
+    >
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Create New ToDo
+                    </h3>
+                    <button
+                        type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                            <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type ToDo title" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                            <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option selected="">Select category</option>
+                                <option value="task">Task</option>
+                                <option value="todo">ToDo</option>
+                                <option value="reminder">Reminder</option>
+                                <option value="list">List</option>
+                            </select>
+                        </div>
+                        <div class="col-span-2">
+                            <label
+                                for="description"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >Description</label>
+                            <textarea
+                                id="description"
+                                rows="4"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Write your description here"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button
+                            type="button"
+                            class="text-gray-100 dark:text-gray-900 inline-flex items-center bg-gray-600 hover:bg-gray-600 focus:ring-0 focus:outline-none focus:ring-gray-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-400 dark:hover:bg-gray-300 dark:focus:ring-blue-800"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="button"
+                            class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-0 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                        >
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

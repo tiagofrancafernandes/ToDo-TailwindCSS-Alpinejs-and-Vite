@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "dev" : "vite",
+    "dev:open" : "vite --open",
+    "build" : "vite build",
+    "preview" : "vite preview"
+  },
   "dependencies": {
     "alpinejs": "^3.14.1",
     "radash": "^12.1.0",
