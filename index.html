@@ -28,33 +28,60 @@
             </div>
 
             <div class="col-span-7 mb-3 p-2">
-                <div class="max-w-lg mx-auto">
+                <div class="max-w-3xl mx-auto">
                     <div class="flex">
-                        <label for="status" class="sr-only">Filter by status</label>
+                        <label for="filter_status" class="sr-only">Filter by status</label>
                         <select
-                            id="status"
+                            id="filter_status"
+                            x-model="filters.done"
                             class="bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none outline-none text-sm rounded-s-lg border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected value="">All</option>
-                            <option value="done">Done</option>
-                            <option value="undone">Undone</option>
+                            <option value="-1">Select a status</option>
+                            <option value="1">Done</option>
+                            <option value="0">Undone</option>
                         </select>
 
-                        <div class="relative w-7/12">
+                        <label for="filter_category" class="sr-only">Filter by category</label>
+                        <select
+                            id="filter_category"
+                            x-model="filters.category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none outline-none text-sm border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">Select a category</option>
+                            <option value="task">Task</option>
+                            <option value="todo">ToDo</option>
+                            <option value="reminder">Reminder</option>
+                            <option value="list">List</option>
+                        </select>
+
+                        <div class="relative w-8/12">
                             <input
                                 type="search"
+                                x-model="filters.text"
                                 id="search-dropdown"
-                                class="block p-2.5 w-full z-20 text-sm text-gray-900 focus:outline-none bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search..."
+                                class="block p-2.5 w-full z-20 text-sm text-gray-900 focus:outline-none bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                placeholder="Search..."
                                 required
                             />
-                            <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:outline-none outline-none focus:ring-0 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <button type="button" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:outline-none outline-none focus:ring-0 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                                 <span class="sr-only">Search</span>
                             </button>
+                            <button
+                                x-cloak
+                                x-show="filters.text"
+                                x-on:click.capture.prevent="filters.text = ''"
+                                type="button"
+                                class="absolute block top-0 end-12 p-2.5 px-2.5 text-sm font-medium h-full text-white bg-transparent rounded-lg opacity-9 focus:outline-none outline-none focus:ring-0 focus:outline-none dark:transparent"
+                            >
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
+                                </svg>
+                                <span class="sr-only">Clear search</span>
+                            </button>
                         </div>
 
-                        <div class="w-1/12 px-2">
+                        <div class="w-2/12 px-1 flex justify-end">
                             <button
                                 type="submit"
                                 class="block focus:outline-none outline-none top-0 end-0 px-3 py-2 text-sm font-medium h-full text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-0 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -71,7 +98,7 @@
 
             <div class="col-span-7 mb-3 p-2">
                 <div
-                    class="max-w-lg mx-auto hidden"
+                    class="max-w-2xl mx-auto hidden"
                 >
                     <h5
                         class="font-medium text-center text-gray-600 dark:text-gray-50"
@@ -79,10 +106,10 @@
                 </div>
 
                 <div
-                    class="max-w-lg mx-auto divide-y divide-dashed ___divide-solid"
+                    class="max-w-2xl mx-auto divide-y divide-dashed divide-solid"
                 >
                     <template
-                        x-for="(dataItem, dataItemIndex) in 5"
+                        x-for="(dataItem, dataItemIndex) in getTodos"
                         :key="dataItemIndex"
                     >
                         <div
@@ -91,7 +118,8 @@
                             <input
                                 :id="`todo-checkbox-input-${dataItemIndex}`"
                                 type="checkbox"
-                                :checked="(dataItemIndex %2 === 0)"
+                                :checked="dataItem.done"
+                                x-model="dataItem.done"
                                 name="bordered-checkbox"
                                 class="h-5 w-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
                             focus:outline-none outline-none
@@ -105,30 +133,65 @@
                                     <div
                                         class="col-span-6"
                                         :class="{
-                                            'font-medium text-gray-900 dark:text-gray-300': (dataItemIndex %2 !== 0),
-                                            'text-gray-800 dark:text-gray-50': (dataItemIndex %2 === 0),
-                                            'font-thin line-through italic': (dataItemIndex %2 === 0)
+                                            'font-normal text-gray-900 dark:text-gray-300': !dataItem.done,
+                                            'text-gray-800 dark:text-gray-50 font-thin': dataItem.done,
                                         }"
                                     >
-                                        <span>Default radio</span>
+                                        <div class="flex justify-between">
+                                            <span
+                                                x-text="dataItem.title" :class="{
+                                                    'line-through italic': dataItem.done,
+                                                }"
+                                            ></span>
+                                            <span
+                                                x-show="dataItem.category"
+                                                x-text="categoryInfo(dataItem.category)?.label"
+                                                class="font-normal italic inline-flex items-center text-gray-800 text-xs font-medium px-1 py-0.5 rounded-md dark:text-gray-50"
+                                                :class="{
+                                                    'bg-blue-300 dark:bg-blue-900': [null, undefined, 'blue'].includes(categoryInfo(dataItem.category)?.color),
+                                                    'bg-green-300 dark:bg-green-800': ['green'].includes(categoryInfo(dataItem.category)?.color),
+                                                    'bg-orange-300 dark:bg-orange-800': ['orange'].includes(categoryInfo(dataItem.category)?.color),
+                                                }"
+                                            ></span>
+                                        </div>
                                     </div>
                                     <div
                                         class="col-span-auto flex items-center hidden group-hover:flex"
+                                        x-on:mouseleave="waitingConfirmDelete = null"
                                     >
+                                        <div class="flex" x-show="!waitingConfirmDelete === true">
                                             <button
                                                 type="button"
-                                                x-on:click="editItem(dataItemIndex)"
+                                                x-on:click="editItem(dataItem.id)"
                                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 type="button"
-                                                x-on:click="deleteItem(dataItemIndex)"
+                                                x-on:click="deleteItem(dataItem.id)"
                                                 class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
                                             >
                                                 Remove
                                             </button>
+                                        </div>
+
+                                        <div class="flex" x-show="waitingConfirmDelete == dataItem.id">
+                                            <button
+                                                type="button"
+                                                x-on:click="cancelDeleteItem()"
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <button
+                                                type="button"
+                                                x-on:click="confirmDeleteItem()"
+                                                class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
+                                            >
+                                                Confirm
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -194,12 +257,33 @@
                 <form class="p-4 md:p-5">
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
-                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                            <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 font-normal" placeholder="Type ToDo title" required="">
+                            <label for="modal_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">modal_Title</label>
+                            <input
+                                type="text"
+                                x-model="editTodo.title"
+                                id="modal_title"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 font-normal" placeholder="Type ToDo title" required="">
                         </div>
                         <div class="col-span-2">
-                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                            <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 font-normal">
+                            <label for="modal_category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Category
+
+                                <span
+                                    x-show="editTodo.category"
+                                    x-text="categoryInfo(editTodo.category)?.label"
+                                    class="font-normal italic inline-flex items-center text-gray-800 text-xs font-medium px-1 py-0.5 rounded-md dark:text-gray-50"
+                                    :class="{
+                                        'hidden': !editTodo.category,
+                                        'bg-blue-300 dark:bg-blue-900': [null, undefined, 'blue'].includes(categoryInfo(editTodo.category)?.color),
+                                        'bg-green-300 dark:bg-green-800': ['green'].includes(categoryInfo(editTodo.category)?.color),
+                                        'bg-orange-300 dark:bg-orange-800': ['orange'].includes(categoryInfo(editTodo.category)?.color),
+                                    }"
+                                ></span>
+                            </label>
+                            <select
+                                id="modal_category"
+                                x-model="editTodo.category"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 font-normal">
                                 <option selected="">Select category</option>
                                 <option value="task">Task</option>
                                 <option value="todo">ToDo</option>
@@ -209,15 +293,55 @@
                         </div>
                         <div class="col-span-2">
                             <label
-                                for="description"
+                                for="modal_description"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >Description</label>
                             <textarea
-                                id="description"
+                                id="modal_description"
+                                x-model="editTodo.description"
                                 rows="4"
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-normal"
                                 placeholder="Write your description here"
                             ></textarea>
+                        </div>
+
+                        <div class="col-span-2">
+                            <div
+                                class="flex items-center ps-4"
+                            >
+                                <input
+                                    id="modal_done"
+                                    type="checkbox"
+                                    :checked="editTodo.done"
+                                    x-model="editTodo.done"
+                                    name="bordered-checkbox"
+                                    class="h-5 w-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+                                focus:outline-none outline-none
+                                dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600">
+                                <div
+                                    class="w-full select-none py-1 ml-2 text-sm inline-block align-middle"
+                                >
+                                    <div
+                                        class="grid grid-cols-8 gap-x-2 py-3 group"
+                                    >
+                                        <div
+                                            class="col-span-6"
+                                            :class="{
+                                                'font-normal text-gray-900 dark:text-gray-300': !editTodo.done,
+                                                'text-gray-800 dark:text-gray-50 font-thin': editTodo.done,
+                                            }"
+                                        >
+                                            <label for="modal_done" class="flex justify-between">
+                                                <span
+                                                    :class="{
+                                                        'line-through italic': editTodo.done,
+                                                    }"
+                                                >Done?</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flex justify-between">
@@ -231,8 +355,9 @@
 
                         <button
                             type="button"
+                            x-on:click.capture.prevent="confirmData"
                             class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-0 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                            x-text="editTodo ? 'Update' : 'Create'"
+                            x-text="isEdit ? 'Update' : 'Create'"
                         >
                         </button>
                     </div>
